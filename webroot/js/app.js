@@ -8,6 +8,8 @@ import UsernameForm from './components/chat/username.js';
 import VideoPoster from './components/video-poster.js';
 import Chat from './components/chat/chat.js';
 import Websocket from './utils/websocket.js';
+import ExternalActionModal from './components/external-action-modal.js';
+
 import { parseSecondsToDurationString, hasTouchScreen, getOrientation } from './utils/helpers.js';
 
 import {
@@ -576,6 +578,7 @@ export default class App extends Component {
           chatInputEnabled=${chatInputEnabled}
           instanceTitle=${name}
         />
+        <${ExternalActionModal} />
       </div>
     `;
   }
