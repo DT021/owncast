@@ -33,6 +33,7 @@ const s3StorageEnabledKey = "s3_storage_enabled"
 const s3StorageConfigKey = "s3_storage_config"
 const videoLatencyLevel = "video_latency_level"
 const videoStreamOutputVariantsKey = "video_stream_output_variants"
+const externalActionsKey = "external_actions"
 
 // GetExtraPageBodyContent will return the user-supplied body content.
 func GetExtraPageBodyContent() string {
@@ -405,6 +406,27 @@ func GetStreamOutputVariants() []models.StreamOutputVariant {
 // SetStreamOutputVariants will set the stream output variants.
 func SetStreamOutputVariants(variants []models.StreamOutputVariant) error {
 	var configEntry = ConfigEntry{Key: videoStreamOutputVariantsKey, Value: variants}
+	return _datastore.Save(configEntry)
+}
+
+// GetExternalActions will return the registered external actions.
+func GetExternalActions() []models.ExternalAction {
+	configEntry, err := _datastore.Get(externalActionsKey)
+	if err != nil {
+		return []models.ExternalAction{}
+	}
+
+	var externalActions []models.ExternalAction
+	if err := configEntry.getObject(&externalActions); err != nil {
+		return []models.ExternalAction{}
+	}
+
+	return externalActions
+}
+
+// SetExternalActions will save external actions.
+func SetExternalActions(actions []models.ExternalAction) error {
+	var configEntry = ConfigEntry{Key: externalActionsKey, Value: actions}
 	return _datastore.Save(configEntry)
 }
 
